@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text, StatusBar, FlatList, ImageBackground } from "react-native";
-import { Feather } from '@expo/vector-icons'; 
+import ListItem from "../components/ListItem";
 
 const DATA = [
     {
@@ -41,18 +41,7 @@ const DATA = [
     },
 ];
 
-const Item = ({dt_txt, min, max, condition }) => {
-    return (
-        <View style={styles.item}>
-            <Feather name="sun" size={50} color="black" />
-            <Text>{dt_txt}</Text>
-            {/* <Text>{condition}</Text> */}
-            <Text style={{fontSize: 20}}>{min}</Text>
-            <Text style = {{fontSize: 20}}>{max}</Text>
-        </View>
-        
-    );
-}
+
 
 const Forecast = () => {
     return (
@@ -67,7 +56,7 @@ const Forecast = () => {
             data={DATA}
             renderItem={({item}) => {
                 return (
-                    <Item dt_txt={item.dt_txt} 
+                    <ListItem dt_txt={item.dt_txt} 
                         min={item.main.temp_min} 
                         max={item.main.temp_max}
                     condition={item.weather[0].main}/>
@@ -87,18 +76,6 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight,
         alignItems: 'center',
     },
-    item: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        gap: 10,
-        backgroundColor: 'pink',
-        borderRadius: 10,
-        elevation: 3,
-        padding: 20,
-    },
-
 });
 
 export default Forecast;

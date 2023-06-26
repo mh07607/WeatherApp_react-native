@@ -1,23 +1,25 @@
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import { useState, useEffect } from 'react';
-import * as Location from 'expo-location';
-import { WEATHER_API_KEY } from '@env';
 import { Feather } from '@expo/vector-icons'; 
+import { weatherType } from '../utilities/weatherType';
 
+const Home = ({weatherData}) => {
 
-//api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+  const {
+    main: {temp, feels_like, temp_max, temp_min}, 
+    weather
+  } = weatherData;
 
-const Home = () => {
+  const weatherCondition = weather[0].main;
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <Feather name="sun" size={50} color="black" />
-        <Text>6</Text>
-        <Text>Feels like 5</Text>
-        <Text>High: 8 Low: 6</Text>
+        <Text>{temp}</Text>
+        <Text>Feels like {feels_like}</Text>
+        <Text>High: {temp_max} Low: {temp_min}</Text>
         <Text>Its sunny</Text>
-        <Text>It's perfect t-shirt weather</Text>
+        <Text>{weatherType.Thunderstorm.message}</Text>
       </View>
     </View>
   );
