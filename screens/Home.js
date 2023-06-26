@@ -18,7 +18,7 @@ const Home = ({weatherData}) => {
           <Feather name={weatherType[weatherCondition].icon} size={50} color="black" />
           <Text style={styles.temperature}>{temp}°C</Text>
           <Text style={styles.feels}>Feels like {feels_like}°C</Text>
-          <Text style={styles.range}>High: {temp_max}°C Low: {temp_min}°C</Text>
+          <Text style={styles.range}>High: {temp_max}°C  |  Low: {temp_min}°C</Text>
         </View>
         <View style={{flex: 1, padding: 20}}>
           <Text style={styles.description}>{weather[0].description}</Text>

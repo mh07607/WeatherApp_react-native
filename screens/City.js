@@ -22,8 +22,8 @@ const City = ({cityData}) => {
                 <Text style={{fontSize: 24}}> {country} </Text>
             </View>
             <View style={{gap: 20}}>
-                <IconText iconName='sunrise' text={moment(sunrise).format('h:mm:ss a')}/>
-                <IconText iconName='sunset' text={moment(sunset).format('h:mm:ss a')}/>
+                <IconText iconName='sunrise' text={moment.utc(sunrise * 1000).local().format('h:mm:ss a')}/>
+                <IconText iconName='sunset' text={moment.utc(sunset * 1000).local().format('h:mm:ss a')}/>
             </View>
             <View style={{alignItems: 'center'}}>
                 <Ionicons name="people" size={60} color="black"/>

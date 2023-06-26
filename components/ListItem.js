@@ -9,8 +9,7 @@ const ListItem = ({dt_txt, min, max, condition }) => {
         <View style={styles.item}>
             <Feather name={weatherType[condition].icon} size={50} color="black" />
             <View style={styles.date}>
-                <Text style={{fontSize: 18}}>{moment(dt_txt).format('dddd')}</Text>
-                <Text style={{fontSize: 16}}>{moment(dt_txt).format('h:mm:ss a')}</Text>
+                <Text style={{fontSize: 20}}>{moment(dt_txt).format('h:mm a')}</Text>
             </View>
             <Text style={{fontSize: 20}}>{Math.round(min*10)/10}° | {Math.round(max*10)/10}°</Text>
         </View>
