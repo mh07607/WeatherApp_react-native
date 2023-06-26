@@ -12,14 +12,18 @@ const Home = ({weatherData}) => {
   const weatherCondition = weather[0].main;
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, {backgroundColor: weatherType[weatherCondition].backgroundColor}]}>
       <View style={styles.container}>
-        <Feather name="sun" size={50} color="black" />
-        <Text>{temp}</Text>
-        <Text>Feels like {feels_like}</Text>
-        <Text>High: {temp_max} Low: {temp_min}</Text>
-        <Text>Its sunny</Text>
-        <Text>{weatherType.Thunderstorm.message}</Text>
+        <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
+          <Feather name={weatherType[weatherCondition].icon} size={50} color="black" />
+          <Text style={styles.temperature}>{temp}°C</Text>
+          <Text style={styles.feels}>Feels like {feels_like}°C</Text>
+          <Text style={styles.range}>High: {temp_max}°C Low: {temp_min}°C</Text>
+        </View>
+        <View style={{flex: 1, padding: 20}}>
+          <Text style={styles.description}>{weather[0].description}</Text>
+          <Text style={styles.message}>{weatherType[weatherCondition].message}</Text>
+        </View>
       </View>
     </View>
   );
@@ -27,16 +31,32 @@ const Home = ({weatherData}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: StatusBar.currentHeight,
     flex: 1,
-    backgroundColor: 'pink',
   },
   container: {
+    marginTop: StatusBar.currentHeight,
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
+  temperature: {
+    fontSize: 60,
+
+  }, 
+  description: {
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+  message: {
+    fontSize: 30,
+  },
+  feels:{
+    fontSize: 32,
+  },
+  range: {
+    fontSize: 24,
+  }
+
+
 });
 
 export default Home;

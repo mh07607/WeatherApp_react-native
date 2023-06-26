@@ -22,22 +22,27 @@ const Tabs = ({weather}) => {
                 {() => <Home weatherData={weather.list[0]}/>}
             </Tab.Screen>
             
-            <Tab.Screen name="Forecast" component={Forecast} options={{
+            <Tab.Screen name="Forecast"  options={{
                 tabBarIcon: ({focused}) => 
                 <Feather name="clock" size={30} color={focused? 'tomato': 'black'}/>,
                 headerShown: false,
                 tabBarStyle: {
                     backgroundColor: 'whitesmoke'
                 }
-                }}/>
-            <Tab.Screen name="City" component={City} options={{
+                }}>
+                {() => <Forecast weatherData={weather.list}/>}
+
+            </Tab.Screen>
+            <Tab.Screen name="City" options={{
                 tabBarIcon: ({focused}) => 
                 <Feather name="home" size={30} color={focused? 'tomato': 'black'}/>,
                 headerShown: false,
                 tabBarStyle: {
                     backgroundColor: 'whitesmoke'
                 }
-                }}/>
+                }}>
+                {() => <City cityData={weather.city}/>}
+            </Tab.Screen>
         </Tab.Navigator>
       );
 }

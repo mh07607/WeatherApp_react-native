@@ -2,10 +2,13 @@ import React from "react";
 import { View, StyleSheet, StatusBar, Text, ImageBackground } from "react-native";
 import IconText from "../components/IconText";
 import { Ionicons } from '@expo/vector-icons'; 
+import moment from "moment";
 
 
 
-const City = () => {
+const City = ({cityData}) => {
+    const { name, country, population, sunrise, sunset} = cityData;
+
     return (
         <>
         <ImageBackground 
@@ -15,14 +18,16 @@ const City = () => {
             
         <View style={styles.top}>
             <View style={{marginBottom: 40, alignItems: 'center'}}>
-                <Text style={{fontSize: 42}}>Karachi</Text>
-                <Text style={{fontSize: 24}}> Pakistan</Text>
+                <Text style={{fontSize: 42}}>{name}</Text>
+                <Text style={{fontSize: 24}}> {country} </Text>
             </View>
-            <IconText iconName='sunrise' text='6:00:00 am'/>
-            <IconText iconName='sunset' text='7:31:00 pm'/>
+            <View style={{gap: 20}}>
+                <IconText iconName='sunrise' text={moment(sunrise).format('h:mm:ss a')}/>
+                <IconText iconName='sunset' text={moment(sunset).format('h:mm:ss a')}/>
+            </View>
             <View style={{alignItems: 'center'}}>
                 <Ionicons name="people" size={60} color="black"/>
-                <Text style={{fontSize: 42, fontWeight: 'bold'}}> 18000000</Text>
+                <Text style={{fontSize: 42, fontWeight: 'bold', backgroundColor: 'gray'}}> {population} </Text>
             </View>
         </View>
         </>
