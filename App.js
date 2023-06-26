@@ -1,62 +1,65 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useState, useEffect } from 'react';
-import * as Location from 'expo-location';
-import { WEATHER_API_KEY } from '@env';
+import React from "react";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
+import Home from "./screens/Home";
+import Forecast from "./screens/Forecast";
+import City from "./screens/City";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Feather } from '@expo/vector-icons'; 
+import { useState } from "react";
 
+
+const Tab = createBottomTabNavigator(); 
 
 //api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
+
 export default function App() {
-  const [location, setLocation] = useState(null);
-  const [error, setError] = useState(null);
-  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const [lat, setLat] = useState(null);
-  const [lon, setLon] = useState(null);
+  if(loading){
+    return(
+      <View style={styles.loading}>
+        <ActivityIndicator size={50}/>
+      </View>
+    );
 
-  const getWeatherDetails = async () => {
-    try {
-      let response = await fetch('http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}');
-      let json = await response.json();
-      setWeather(json);
-    } catch (error) {
-      setError("Couldn't get weather data");
-    }
   }
-  
-
-  useEffect(() => {
-    (async() => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if(status !=='granted'){
-        setError('Permission to access location denied');
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      setLat(location.coords.latitude);
-      setLon(location.coords.longitude);
-      await getWeatherDetails();
-    })()
-  }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>{error ? error: 'No error yet'}</Text>
-      <Text>{location ? location['coords']['latitude']: 'Loading'}</Text>
-      <Text>{location ? location['coords']['longitude']: 'Loading'}</Text>
-      <Text>{weather? weather['cnt']: 'Loading'}</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Tab.Navigator>
+          <Tab.Screen name="Home" component={Home} options={{
+            tabBarIcon: ({focused}) => 
+              <Feather name="droplet" size={30} color={focused? 'tomato': 'black'}/>,
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: 'whitesmoke'
+              }
+          }}/>
+          <Tab.Screen name="Forecast" component={Forecast} options={{
+            tabBarIcon: ({focused}) => 
+              <Feather name="clock" size={30} color={focused? 'tomato': 'black'}/>,
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: 'whitesmoke'
+              }
+            }}/>
+          <Tab.Screen name="City" component={City} options={{
+            tabBarIcon: ({focused}) => 
+              <Feather name="home" size={30} color={focused? 'tomato': 'black'}/>,
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: 'whitesmoke'
+              }
+            }}/>
+      </Tab.Navigator>
+    </NavigationContainer>
+  );}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+  loading: {
+    flex:1,
     justifyContent: 'center',
   },
 });
