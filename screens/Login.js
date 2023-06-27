@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {auth} from '../firebase';
-import { TextInput, Text,  View, TouchableOpacity, StyleSheet } from "react-native";
+import { TextInput, Text,  View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
-const Login = () => {
+const Login = ({LogIn}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,9 +12,17 @@ const Login = () => {
         .createUserWithEmailAndPassword(email, password)
         .then(userCredentials => {
             const user = userCredentials.user;
-            console.log('Success');
-        })
-        .catch(error => console.log(error.message))
+            Alert.alert('New account created!', 'Log In using your credentials to continue.', [
+                {text: 'OK'},
+              ]);
+        }) 
+        .catch(error => {
+            setPassword('');
+            Alert.alert('Request failed', error.message, [
+                {text: 'OK'},
+              ]);
+        });
+
     }
 
     const handleLogIn = () => {
@@ -22,9 +30,15 @@ const Login = () => {
         .signInWithEmailAndPassword(email, password)
         .then(userCredentials => {
             const user = userCredentials.user;
-            console.log('Success');
+            LogIn();
         })
-        .catch(error => console.log(error.message))
+        .catch(error => {
+            setPassword('');
+            Alert.alert('Request failed', error.message, [
+                {text: 'OK'},
+              ]);
+        });
+        
     }
 
     return (
@@ -43,13 +57,15 @@ const Login = () => {
             </View>
             <View style={{gap: 8, justifyContent: 'center'}}>
                 <TouchableOpacity style={styles.button}
-                onPressOut={handleLogIn}>
+                onPressOut={ 
+                    (navigation) => {handleLogIn(navigation)}
+                }>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}
+                <TouchableOpacity style={styles.signUpButton}
                 onPressOut={handleSignUp}
                 >
-                    <Text style={styles.buttonText}>SignUp</Text>
+                    <Text style={styles.signUpButtonText}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -75,9 +91,26 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         elevation: 3,
     },
+    signUpButton: {
+        backgroundColor: 'white',
+        borderColor: 'pink',
+        textAlign: 'center',
+        padding: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        width: 100,
+        borderRadius: 6,
+        elevation: 3,
+    },
     buttonText:{
         textAlign: 'center',
         color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    signUpButtonText:{
+        textAlign: 'center',
+        color: 'pink',
         fontSize: 16,
         fontWeight: 'bold',
     }
