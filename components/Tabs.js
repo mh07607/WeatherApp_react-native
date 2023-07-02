@@ -8,7 +8,7 @@ import { Feather } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator(); 
 
-const Tabs = ({weather}) => {
+const Tabs = ({weather, LogIn}) => {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Home" options={{
@@ -19,7 +19,7 @@ const Tabs = ({weather}) => {
                     backgroundColor: 'whitesmoke'
                 }
             }}>
-                {() => <Home weatherData={weather.list[0]}/>}
+                {() => <Home weatherData={weather.list[0]} LogIn={LogIn}/>}
             </Tab.Screen>
             
             <Tab.Screen name="Forecast"  options={{

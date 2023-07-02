@@ -6,7 +6,7 @@ import ErrorItem from "../components/ErrorItem";
 import { NavigationContainer } from "@react-navigation/native";
 
 
-const Main = () =>{
+const Main = ({LogIn}) =>{
   const [loading, error, weather] = useGetWeather();
 
   if(error)  {
@@ -18,7 +18,7 @@ const Main = () =>{
   if(weather && weather.list){
     return (
       <NavigationContainer independent={true}>
-        <Tabs weather={weather}/>
+        <Tabs weather={weather} LogIn = {LogIn}/>
       </NavigationContainer>
     );
   }

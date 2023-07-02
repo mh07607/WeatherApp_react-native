@@ -30,7 +30,7 @@ const Login = ({LogIn}) => {
         .signInWithEmailAndPassword(email, password)
         .then(userCredentials => {
             const user = userCredentials.user;
-            LogIn();
+            LogIn(true);
         })
         .catch(error => {
             setPassword('');
@@ -46,11 +46,11 @@ const Login = ({LogIn}) => {
             <View style={{gap: 10, justifyContent: 'flex-end', alignItems: 'center'}}>
                 <TextInput 
                 style={styles.textBox}
-                placeholder="email"
+                placeholder="  email"
                 value={email}
                 onChangeText={(text) => {setEmail(text)}} />
                 <TextInput style={styles.textBox} 
-                placeholder="password"
+                placeholder="  password"
                 value={password}
                 onChangeText={(text) => {setPassword(text)}}
                 secureTextEntry={true}/>
